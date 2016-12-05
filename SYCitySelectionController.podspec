@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "SYCitySelectionController"
-  s.version      = "0.0.3"
+  s.version      = "0.0.4"
   s.summary      = "Quit create city selection contoller."
 
   # This description is used to generate tags and improve search results.

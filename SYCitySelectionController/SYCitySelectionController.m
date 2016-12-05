@@ -360,13 +360,16 @@
 }
 
 - (void)setNavigation {
+    self.title = @"选择城市";
+
+    if (self.backView) {
+        return;
+    }
     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame = CGRectMake(0, 0, 30, 30);
     [btn setImage:[UIImage imageNamed:@"SYCity.bundle/close"] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:btn];
-
-    self.title = @"选择城市";
 }
 
 - (void)setTableView {
@@ -388,7 +391,7 @@
     NSArray *tempIndex = @[];
 
     if (!_cityDict) {
-        if (!_allCity) {
+        if (!_citys) {
             NSArray *citys = [self arrayWithPathName:@"city"];
             //    NSArray *citydatas = [self arrayWithPathName:@"citydata"];
 
@@ -396,13 +399,23 @@
             [citys enumerateObjectsUsingBlock:^(NSDictionary *obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 [city addObject:obj[@"name"]];
             }];
-            _allCity = city.copy;
+            _citys = city.copy;
         }
-        _cityNames = [SYPinyinSort sortWithChineses:_allCity];
+        _cityNames = [SYPinyinSort sortWithChineses:_citys];
         tempIndex = [[SYPinyinSort defaultPinyinSort] indexArray];
     } else {
-        _cityNames = [_cityDict allValues];
-        tempIndex = [_cityDict allKeys];
+
+        NSArray *index = [_cityDict allKeys];
+        tempIndex = [index sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+            return [obj1 compare:obj2];
+        }];
+
+        NSMutableArray *mArr = @[].mutableCopy;
+        [tempIndex enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [mArr addObject:_cityDict[obj]];
+        }];
+
+        _cityNames = mArr.copy;
     }
 
     NSMutableArray *sortCitys = @[].mutableCopy;
@@ -532,10 +545,6 @@
             };
         }
         cell.citys = categoryCitys;
-        for (NSString *city in categoryCitys) {
-            NSLog(@"--- %@", city);
-        }
-        NSLog(@"-------------------------");
         return cell;
     }
 
@@ -660,11 +669,12 @@
 
              //系统会一直更新数据，直到选择停止更新，因为我们只需要获得一次经纬度即可，所以获取之后就停止更新
              [manager stopUpdatingLocation];
-         } else if (error == nil && [array count] == 0) {
-             NSLog(@"No results were returned.");
-         } else if (error != nil) {
-             NSLog(@"An error occurred = %@", error);
          }
+//         else if (error == nil && [array count] == 0) {
+//             NSLog(@"No results were returned.");
+//         } else if (error != nil) {
+//             NSLog(@"An error occurred = %@", error);
+//         }
      }];
 }
 
@@ -684,11 +694,16 @@
     [_locationManager stopUpdatingHeading];
 }
 
-- (void)setBackButton:(UIButton *)backButton {
-    if (_backButton == backButton) return;
-    _backButton = backButton;
-    [_backButton addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+- (void)setBackView:(UIView *)backView {
+    if (_backView == backView) return;
+    _backView = backView;
+    if ([backView isKindOfClass:[UIButton class]]) {
+        [(UIButton *)backView addTarget:self action:@selector(cancelDidClick) forControlEvents:UIControlEventTouchUpInside];
+    }else {
+        UITapGestureRecognizer *tapGes = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelDidClick)];
+        [backView addGestureRecognizer:tapGes];
+    }
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backView];
 }
 
 - (void)setBackImageName:(NSString *)backImageName {
@@ -714,9 +729,9 @@
     return _hotCitys;
 }
 
-- (void)setAllCity:(NSArray *)allCity {
-    if (_allCity == allCity) return;
-    _allCity = allCity;
+- (void)setCitys:(NSArray *)citys {
+    if (_citys == citys) return;
+    _citys = citys;
 }
 
 @end

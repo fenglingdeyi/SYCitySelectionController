@@ -30,15 +30,15 @@
 @property (nonatomic, copy) NSString *backImageName;
 
 /// 返回按钮
-@property (nonatomic, strong) UIButton *backButton;
+@property (nonatomic, strong) UIView *backView;
 
 /// 热门城市
 @property (nonatomic, copy) NSArray *hotCitys;
 
-/// 所有城市, 使用自己的数据，不依赖于我的
-@property (nonatomic, copy) NSArray *allCity;
+/// 所有城市
+@property (nonatomic, copy) NSArray *citys;
 
-/// 自己的城市Dict
+/// 自己的城市Dict (Key is 'A,B,C,D...')
 @property (nonatomic, copy) NSDictionary *cityDict;
 
 
