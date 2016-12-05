@@ -1,9 +1,10 @@
 # SYCitySelectionController
 快速搭建一个城市选择控制器
+感兴趣的给个Star吧...
 
 # CocoaPods:
 ```
-pod 'SYCitySelectionController', '~> 0.0.3'
+pod 'SYCitySelectionController', '~> 0.0.4'
 ```
 
 # Usage:
