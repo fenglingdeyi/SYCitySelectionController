@@ -1,22 +1,7 @@
-#
-#  Be sure to run `pod spec lint SYCitySelectionController.podspec' to ensure this is a
-#  valid spec and to remove all comments including this before submitting the spec.
-#
-#  To learn more about Podspec attributes see http://docs.cocoapods.org/specification.html
-#  To see working Podspecs in the CocoaPods repo see https://github.com/CocoaPods/Specs/
-#
 
 Pod::Spec.new do |s|
-
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  These will help people to find your library, and whilst it
-  #  can feel like a chore to fill in it's definitely to your advantage. The
-  #  summary should be tweet-length, and the description more in depth.
-  #
-
   s.name         = "SYCitySelectionController"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Quit create city selection contoller."
 
   # This description is used to generate tags and improve search results.
@@ -53,7 +38,7 @@ Pod::Spec.new do |s|
   #  profile URL.
   #
 
-  s.author             = { "SY" => "kellenyangs@gmail.com" }
+  s.author             = { "shenyang" => "kellenyangs@gmail.com" }
   # Or just: s.author    = ""
   # s.authors            = { "" => "" }
   s.social_media_url   = "http://weibo.com/3072322417/profile?topnav=1&wvr=6"
@@ -64,7 +49,7 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.platform     = :ios
+  s.platform     = :ios, '6.0'
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
@@ -91,7 +76,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "SYCitySelectionController/**/*"
+  s.source_files  = 'SYCitySelectionController/**/*.{h,m}'
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -105,9 +90,9 @@ Pod::Spec.new do |s|
   #  non-essential files like tests, examples and documentation.
   #
 
-  # s.resource  = "icon.png"
-  s.resources = "SYCitySelectionController/SYCity.bundle/**/*.png"
-
+  s.resource  = 'SYCitySelectionController/SYCity.bundle'
+  # s.resources = "SYCitySelectionController/SYCity.bundle/**/*.png"
+  # s.resource_bundles = {'SYCity' => ['SYCitySelectionController/SYCity.bundle']}
   # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
 
